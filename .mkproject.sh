@@ -88,6 +88,7 @@ touch sonar-project.properties
 touch scripts.md
 echo "# $1" >> scripts.md
 echo "'test': 'mocha'," >> scripts.md
+echo "'coverage': 'nyc npm test'," >> scripts.md
 echo "'coveralls': 'nyc npm test && nyc report --reporter=lcov'," >> scripts.md
 echo "'start': 'tsc-watch --onSuccess \"node dist/*.js\"'," >> scripts.md
 echo "'doc': 'typedoc'," >> scripts.md

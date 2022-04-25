@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "mocha",
+    "coverage": "nyc npm test",
     "coveralls": "nyc npm test && nyc report --reporter=lcov",
     "start": "tsc-watch --onSuccess 'node dist/*.js'",
     "doc": "typedoc",
