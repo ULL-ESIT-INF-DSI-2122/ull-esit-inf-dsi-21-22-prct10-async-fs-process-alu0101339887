@@ -1,6 +1,6 @@
 import 'mocha';
 import {expect} from 'chai';
-import {productTable} from '../src/prueba';
+import {productTable} from '../../src/EjercicioPrueba/prueba';
 
 describe('Tests del ejercicio de prueba', () => {
   it('productTable es una función', () => {
