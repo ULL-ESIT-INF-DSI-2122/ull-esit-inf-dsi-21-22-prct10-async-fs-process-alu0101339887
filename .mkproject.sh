@@ -80,6 +80,10 @@ echo "Should add scripts in package.json" >> notes.md
 echo "Should add entryPoint in typedoc.json" >> notes.md
 echo "Should change _config info" >> notes.md
 echo "Should configure GitHub Actions and Secrets" >> notes.md
+echo "Should configure GitHub Pages" >> notes.md
+echo "Should configure sonar-project.properties file" >> notes.md
+
+touch sonar-project.properties
 
 touch scripts.md
 echo "# $1" >> scripts.md
