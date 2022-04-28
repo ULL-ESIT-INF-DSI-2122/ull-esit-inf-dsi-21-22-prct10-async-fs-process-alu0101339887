@@ -12,10 +12,10 @@ import {spawn} from 'child_process';
  * opera con ellos, y escribe en consola el resultado.
  */
 export class Suma {
-  constructor(private file: string,
-              private operation: string,
-              private command: string,
-              private args: string[]) {
+  constructor(readonly file: string,
+              readonly operation: string,
+              readonly command: string,
+              readonly args: string[]) {
     access(file, (err) => {
       if (err) {
         console.log(`File ${file} not found`);
@@ -28,9 +28,9 @@ export class Suma {
 
   /**
    * Método que realiza la suma de los números de un fichero.
-   * @param file Nombre del fichero
+   * @param file_ Nombre del fichero
    */
-  private addFile(file: string) {
+  private addFile(file_: string) {
     let sum = 0;
     const lineReader = require('readline').createInterface({
       input: require('fs').createReadStream(file),
@@ -48,47 +48,40 @@ export class Suma {
    * opera con ellos, y escribe en consola el resultado.
    */
   private run() {
-    access(file, (err) => {
-      if (err) {
-        console.log(`File ${file} not found`);
-        return;
-      } else {
-        watch(this.file, (event, filename) => {
-          if (event === 'change') {
-            const child = spawn(this.command, [...this.args, this.file]);
-            let output = 0;
-            child.stdout.on('data', (data) => {
-              if (this.operation) {
-                if (this.operation === '+') {
-                  output += data;
-                } else if (this.operation === '-') {
-                  for (const num of file) {
-                    output -= Number(num);
-                  }
-                } else if (this.operation === '*') {
-                  for (const num of file) {
-                    output *= Number(num);
-                  }
-                } else if (this.operation === '/') {
-                  for (const num of file) {
-                    output /= Number(num);
-                  }
-                } else {
-                  console.log(`The operation is not supported`);
-                }
-                console.log(`Suma: ${output}`);
-              } else if (this.operation === '') {
-                this.addFile(this.file);
+    watch(this.file, (event, filename) => {
+      if (event === 'change') {
+        const child = spawn(this.command, [...this.args, this.file]);
+        let output = 0;
+        child.stdout.on('data', (data) => {
+          if (this.operation) {
+            if (this.operation === '+') {
+              output += data;
+            } else if (this.operation === '-') {
+              for (const num of file) {
+                output -= Number(num);
               }
-            });
-            child.on('close', () => {
-              console.log(`Suma: ${output}`);
-            });
-          } else {
-            console.log(`${filename} has been deleted`);
-            throw new Error('${filename} has been deleted');
+            } else if (this.operation === '*') {
+              for (const num of file) {
+                output *= Number(num);
+              }
+            } else if (this.operation === '/') {
+              for (const num of file) {
+                output /= Number(num);
+              }
+            } else {
+              console.log(`The operation is not supported`);
+            }
+            console.log(`Suma: ${output}`);
+          } else if (this.operation === '') {
+            this.addFile(this.file);
           }
         });
+        child.on('close', () => {
+          console.log(`Suma: ${output}`);
+        });
+      } else {
+        console.log(`${filename} has been deleted`);
+        throw new Error(`${filename} has been deleted`);
       }
     });
   }
@@ -104,10 +97,3 @@ if (argv.length < 3) {
   process.exit(1);
 }
 const file = argv[2];
-if (argv.length === 3) {
-  new Suma(file, '', 'ls', ['-lh', file]);
-} else if (argv.length === 4) {
-  new Suma(file, argv[3], 'ls', []);
-} else {
-  new Suma(file, argv[3], argv[3], argv.slice(4));
-}
