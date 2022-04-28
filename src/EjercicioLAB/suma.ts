@@ -52,28 +52,26 @@ export class Suma {
         const child = spawn(this.command, [...this.args, this.file]);
         let output = 0;
         child.stdout.on('data', (data) => {
-          if (this.operation) {
-            if (this.operation === '+') {
-              output += data;
-            } else if (this.operation === '-') {
-              for (const num of file) {
-                output -= Number(num);
-              }
-            } else if (this.operation === '*') {
-              for (const num of file) {
-                output *= Number(num);
-              }
-            } else if (this.operation === '/') {
-              for (const num of file) {
-                output /= Number(num);
-              }
-            } else {
-              console.log(`The operation is not supported`);
+          if (this.operation === '+') {
+            output += data;
+          } else if (this.operation === '-') {
+            for (const num of this.file) {
+              output -= Number(num);
             }
-            console.log(`Suma: ${output}`);
+          } else if (this.operation === '*') {
+            for (const num of this.file) {
+              output *= Number(num);
+            }
+          } else if (this.operation === '/') {
+            for (const num of this.file) {
+              output /= Number(num);
+            }
           } else if (this.operation === '') {
             this.addFile(this.file);
+          } else {
+            console.log(`The operation is not supported`);
           }
+          console.log(`Suma: ${output}`);
         });
         child.on('close', () => {
           console.log(`Suma: ${output}`);
@@ -96,3 +94,10 @@ if (argv.length < 3) {
   process.exit(1);
 }
 const file = argv[2];
+if (argv.length === 3) {
+  new Suma(file, '', 'ls', ['-lh', file]);
+} else if (argv.length === 4) {
+  new Suma(file, argv[3], 'ls', []);
+} else {
+  new Suma(file, argv[3], argv[3], argv.slice(4));
+}
