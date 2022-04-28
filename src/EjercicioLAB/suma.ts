@@ -19,7 +19,6 @@ export class Suma {
     access(file, (err) => {
       if (err) {
         console.log(`File ${file} not found`);
-        return;
       } else {
         this.run();
       }
@@ -33,13 +32,13 @@ export class Suma {
   private addFile(file_: string) {
     let sum = 0;
     const lineReader = require('readline').createInterface({
-      input: require('fs').createReadStream(file),
+      input: require('fs').createReadStream(file_),
     });
     lineReader.on('line', (line: number) => {
       sum += +line;
     });
     lineReader.on('close', () => {
-      console.log(`${this.operation} of ${file} is ${sum}`);
+      console.log(`${this.operation} of ${file_} is ${sum}`);
     });
   }
 
