@@ -93,11 +93,11 @@ if (argv.length < 3) {
   console.log('Usage: node suma.js numberList.txt [+, -, *, /...]');
   process.exit(1);
 }
-const file = argv[2];
-if (argv.length === 3) {
-  new Suma(file, '', 'ls', ['-lh', file]);
-} else if (argv.length === 4) {
-  new Suma(file, argv[3], 'ls', []);
-} else {
-  new Suma(file, argv[3], argv[3], argv.slice(4));
-}
+// const file = argv[2];
+// if (argv.length === 3) {
+//   new Suma(file, '', 'ls', ['-lh', file]);
+// } else if (argv.length === 4) {
+//   new Suma(file, argv[3], 'ls', []);
+// } else {
+//   new Suma(file, argv[3], argv[3], argv.slice(4));
+// }

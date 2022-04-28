@@ -11,6 +11,14 @@
     "doc": "typedoc",
     "make": "node ./dist/*.js"
   },
+  "nyc": {
+    "include": [
+      "src/**/*.ts"
+    ],
+    "exclude": [
+      "src/EjercicioLAB/suma.ts"
+    ]
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/ULL-ESIT-INF-DSI-2122/ull-esit-inf-dsi-21-22-prct10-async-fs-process-alu0101339887.git"
