@@ -9,29 +9,32 @@
 - [INTRODUCCIÓN](#id1).
 - [DESARROLLO](#id2).
   - [Ejercicio 1](#id3).
-  - [Ejercicio 2](#id4).
-    - [Manejo de los argumentos](#id5).
-    - [Método ```withPipe()```](#id6).
-    - [Método ```withoutPipe()```](#id7).
-    - [Ejemplos de ejecución](#id8).
-  - [Ejercicio 3](#id9).
-    - [Manejo de los argumentos](#id10).
-    - [Método ```watchFile_()```](#id11).
-    - [Método ```watchAll()```](#id12).
-    - [Método ```getUser()```](#id13).
-    - [Método ```readFile_()```](#id14).
-    - [Ejemplos de ejecución](#id15).
-  - [Ejercicio 4](#id16).
-    - [Manejo de los argumentos](#id17).
-    - [Método ```type_()```](#id18).
-    - [Método ```isDirectory()```](#id19).
-    - [Método ```add()```](#id20).
-    - [Método ```list()```](#id21).
-    - [Método ```showFile_()```](#id22).
-    - [Método ```remove()```](#id23).
-    - [Método ```moveDir()```](#id24).
-    - [Ejemplos de ejecución](#id25).
-- [CONCLUSIÓN](#id26).
+    - [Paso 1](#id4).
+    - [Paso 2](#id5).
+    - [Paso 3](#id6).
+  - [Ejercicio 2](#id7).
+    - [Manejo de los argumentos](#id8).
+    - [Método ```withPipe()```](#id9).
+    - [Método ```withoutPipe()```](#id10).
+    - [Ejemplos de ejecución](#id11).
+  - [Ejercicio 3](#id12).
+    - [Manejo de los argumentos](#id13).
+    - [Método ```watchFile_()```](#id14).
+    - [Método ```watchAll()```](#id15).
+    - [Método ```getUser()```](#id16).
+    - [Método ```readFile_()```](#id17).
+    - [Ejemplos de ejecución](#id18).
+  - [Ejercicio 4](#id19).
+    - [Manejo de los argumentos](#id20).
+    - [Método ```type_()```](#id21).
+    - [Método ```isDirectory()```](#id22).
+    - [Método ```add()```](#id23).
+    - [Método ```list()```](#id24).
+    - [Método ```showFile_()```](#id25).
+    - [Método ```remove()```](#id26).
+    - [Método ```moveDir()```](#id27).
+    - [Ejemplos de ejecución](#id28).
+- [CONCLUSIÓN](#id29).
 
 # INTRODUCCIÓN<a name="id1"></a>
 
@@ -53,14 +56,70 @@ Por último, podrá acceder a la página web del informe pulsando sobre este [_e
 
 ## Ejercicio 1<a name="id3"></a>
 
+En este primer ejercicio se nos propone un código que realizará un sencillo control de cambios de un fichero, para ello realizará varias comprobaciones sobre el fichero, y si se detecta algún cambio, se mostrará el contenido del fichero en la terminal.
 
-## Ejercicio 2<a name="id4"></a>
+### Paso 1<a name="id4"></a>
+
+Lo primero que realizará el código es comprobar si el usuario ha introducido los argumentos necessarios para ejecutar el programa. En caso de no introducir los argumentos, se mostrará un mensaje de error y se terminará la ejecución del programa.
+
+```typescript
+if (process.argv.length !== 3) {
+  console.log('Please, specify a file');
+} else {
+  // here goes code ...
+}
+```
+
+## Paso 2<a name="id5"></a>
+
+En caso de que el usuario haya introducido todos los argumentos necesarios para la correcta ejecución del programa, se accederá al fichero especificado y se comprobará si el fichero existe o no. En caso de que el fichero no exista, se mostrará un mensaje de error y se terminará la ejecución del programa.
+
+```typescript
+if (process.argv.length !== 3) {
+  console.log('Please, specify a file');
+} else {
+  const filename = process.argv[2];
+  access(filename, constants.F_OK, (err) => {
+    if (err) {
+      console.log(`File ${filename} does not exist`);
+    } else {
+      // here goes code ...
+    }
+  });
+}
+```
+
+### Paso 3<a name="id6"></a>
+
+Finalmente, en caso de que el fichero exista, se accederá al fichero y, cada vez que se realice un cambio en el fichero, se mostrará un mensaje indicando que se están realizando cambios en este. En caso de que no se realice ningún cambio también se mostrará un mensaje indicando esto.
+
+```typescript
+if (process.argv.length !== 3) {
+  console.log('Please, specify a file');
+} else {
+  const filename = process.argv[2];
+  access(filename, constants.F_OK, (err) => {
+    if (err) {
+      console.log(`File ${filename} does not exist`);
+    } else {
+      console.log(`Starting to watch file ${filename}`);
+      const watcher = watch(process.argv[2]);
+      watcher.on('change', () => {
+        console.log(`File ${filename} has been modified somehow`);
+      });
+      console.log(`File ${filename} is no longer watched`);
+    }
+  });
+}
+```
+
+## Ejercicio 2<a name="id7"></a>
 
 Para este segundo ejercicio se nos pide implementar un programa que devuelva el número de ocurrencias de una palabra en un fichero de texto. Para ello deberemos hacer uso de la función **spawn** y de los comandos ```grep```, ```cat``` y ```wc```. Además, gracias al uso del paquete **yargs** podremos acceder y gestionar los parámetros introducidos por el usuario desde la línea de comandos.
 
 <img width="765" alt="Captura de pantalla 2022-04-28 a las 20 32 24" src="https://user-images.githubusercontent.com/58183963/166163830-22b8fdca-49b5-4327-a397-78dfb5dc2ef1.png">
 
-### Manejo de los argumentos<a name="id5"></a>
+### Manejo de los argumentos<a name="id8"></a>
 
 Como comentamos anteriormente, para poder acceder a los argumentos introducidos por el usuario desde la línea de comandos, se utilizará el paquete **yargs**.
 
@@ -109,7 +168,7 @@ yargs.command({
 });
 ```
 
-### Método ```withPipe()```<a name="id6"></a>
+### Método ```withPipe()```<a name="id9"></a>
 
 Con esta función se podrá contar el número de ocurrencias de una palabra en un fichero de texto haciendo uso del método pipe de la función **spawn**. 
 
@@ -131,7 +190,7 @@ export function withPipe(file: string, word: string) {
 }
 ```
 
-### Método ```withoutPipe()```<a name="id7"></a>
+### Método ```withoutPipe()```<a name="id10"></a>
 
 Con esta función se podrá contar el número de ocurrencias de una palabra en un fichero de texto sin hacer uso del método pipe de la función **spawn**. 
 
@@ -155,20 +214,20 @@ export function withoutPipe(file: string, word: string) {
 
 <img width="1279" alt="Captura de pantalla 2022-04-28 a las 22 12 30" src="https://user-images.githubusercontent.com/58183963/166163854-58380671-042c-4b23-a842-ba9bfe363095.png">
 
-### Ejemplos de ejecución<a name="id8"></a>
+### Ejemplos de ejecución<a name="id11"></a>
 
 ```bash
 $ node count.js count --file=file.txt --word=word --pipe=yes
 $ node count.js count --file=file.txt --word=word --pipe=no
 ```
 
-## Ejercicio 3<a name="id9"></a>
+## Ejercicio 3<a name="id12"></a>
 
 En este tercer ejercicio se tendrá que crear un programa que controle los cambios realizados sobre todo el directorio especificado en la línea de comandos por el usuario al mismo tiempo que dicho usuario interactúa con la aplicación de procesamiento de notas creada en la práctica anterior ([_Práctica_09_](https://github.com/ULL-ESIT-INF-DSI-2122/ull-esit-inf-dsi-21-22-prct09-filesystem-notes-app-alu0101339887)).
 
 Para ello, el nuevo programa deberá recibir desde la línea de comandos tanto el nombre de un usuario de la aplicación de notas, así como la ruta donde se almacenan las notas de dicho usuario. Esto puede gestionarse nuevamente haciendo uso del paquete ```yargs```.
 
-### Manejo de los argumentos<a name="id10"></a>
+### Manejo de los argumentos<a name="id13"></a>
 
 Como comentamos anteriormente, para poder acceder a los argumentos introducidos por el usuario desde la línea de comandos, se utilizará el paquete **yargs**.
 
@@ -225,7 +284,7 @@ En este caso, se crearán dos comandos:
     });
     ```
 
-### Método ```watchFile_()```<a name="id11"></a>
+### Método ```watchFile_()```<a name="id14"></a>
 
 Este método se encargará de controlar los cambios realizados en un fichero especificado por el usuario. En esta función es interesante comentar que, dependiendo del paquete que usemos, podremos especificar más o menos los eventos que suceden a la hora de realizar cambios en un directorio o en un fichero.
 
@@ -277,7 +336,7 @@ export function watchFile_(user: string, path: string) {
 }
 ```
 
-### Método ```watchAll()```<a name="id12"></a>
+### Método ```watchAll()```<a name="id15"></a>
 
 En el caso de la función ```watchAll()```, se encargará de controlar los cambios realizados en todos los directorios de todos los usuarios. Al igual que en la función anterior, también es interesante comentar que, dependiendo del paquete que usemos, podremos especificar más o menos los eventos que suceden a la hora de realizar cambios en un directorio o en un fichero.
 
@@ -292,7 +351,7 @@ export function watchAll(path: string) {
 }
 ```
 
-### Método ```getUser()```<a name="id13"></a>
+### Método ```getUser()```<a name="id16"></a>
 
 Este método se encargará de obtener el nombre del usuario que está realizando los cambios en un directorio especificado por el usuario.
 
@@ -303,7 +362,7 @@ export function getUser(path: string) {
 }
 ```
 
-### Método ```readFile_()```<a name="id14"></a>
+### Método ```readFile_()```<a name="id17"></a>
 
 Este método se encargará de leer el fichero especificado por el usuario y de mostrarlo por pantalla cada vez que se produzca un cambio en él.
 
@@ -329,14 +388,14 @@ export function readFile_(path: string) {
 }
 ```
 
-### Ejemplos de ejecución<a name="id15"></a>
+### Ejemplos de ejecución<a name="id18"></a>
 
 ```bash
 $ node watch.js watch --user=user --path=path
 $ node watch.js watchAll --path=path
 ```
 
-## Ejercicio 4<a name="id16"></a>
+## Ejercicio 4<a name="id19"></a>
 
 En este último ejercicio se realizará una aplicación que permita hacer de **wrapper** de los distintos comandos empleados en Linux para el manejo de ficheros y directorios. La aplicación deberá permitir los siguientes comandos:
 
@@ -347,7 +406,7 @@ En este último ejercicio se realizará una aplicación que permita hacer de **w
   5. Borrar ficheros y directorios.
   6. Mover ficheros y/o directorios de una ruta a otra. 
 
-### Manejo de los argumentos<a name="id17"></a>
+### Manejo de los argumentos<a name="id20"></a>
 
 Como comentamos anteriormente, para poder acceder a los argumentos introducidos por el usuario desde la línea de comandos, se utilizará el paquete **yargs**.
 
@@ -497,7 +556,7 @@ En este caso, tendremos que crear varios comandos:
   });
   ```
 
-### Método ```type_()```<a name="id18"></a>
+### Método ```type_()```<a name="id21"></a>
 
 Este método se encargará de mostrar si se trata de un directorio o un fichero, para ello primero tendrá que comprobar si la ruta introducida existe y, después, haciendo uso de la función isDirectory() se comprobará si es un directorio o un fichero.
 
@@ -515,7 +574,7 @@ export function type_(path: string) {
 }
 ```
 
-### Método ```isDirectory()```<a name="id19"></a>
+### Método ```isDirectory()```<a name="id22"></a>
 
 Este método se encargará de comprobar si una ruta es un directorio.
 
@@ -525,7 +584,7 @@ export function isDirectory(path: string) {
 }
 ```
 
-### Método ```add()```<a name="id20"></a>
+### Método ```add()```<a name="id23"></a>
 
 Este método se encargará de crear un nuevo directorio.
 
@@ -548,7 +607,7 @@ Este método se encargará de crear un nuevo directorio.
 }
 ```
 
-### Método ```list()```<a name="id21"></a>
+### Método ```list()```<a name="id24"></a>
 
 Este método se encargará de mostrar los directorios y ficheros que contiene.
 
@@ -575,7 +634,7 @@ export function list(path: string) {
 }
 ```
 
-### Método ```showFile()```<a name="id22"></a>
+### Método ```showFile()```<a name="id25"></a>
 
 Este método se encargará de mostrar el contenido de un fichero.
 
@@ -600,7 +659,7 @@ export function showFile(path: string) {
 }
 ```
 
-### Método ```remove()```<a name="id23"></a>
+### Método ```remove()```<a name="id26"></a>
 
 Este método se encargará de eliminar un directorio o un fichero.
 
@@ -624,7 +683,7 @@ export function remove(path: string) {
 }
 ```
 
-### Método ```moveDir()```<a name="id24"></a>
+### Método ```moveDir()```<a name="id27"></a>
 
 Este método se encargará de mover un directorio o un fichero de una ruta a otra.
 
@@ -654,7 +713,7 @@ export function moveDir(oPath: string, dPath: string) {
 }
 ```
 
-### Ejemplos de ejecución<a name="id25"></a>
+### Ejemplos de ejecución<a name="id28"></a>
 
 ```bash
 $ node watch.js type --path=path
@@ -667,7 +726,7 @@ $ node watch.js move --orig_path=path --dest_path=path
 
 <img width="1393" alt="Captura de pantalla 2022-05-01 a las 16 09 27" src="https://user-images.githubusercontent.com/58183963/166163871-affe8fb8-5ba8-4faf-8718-7daa8d79e1ac.png">
 
-# CONCLUSIÓN<a name="id26"></a>
+# CONCLUSIÓN<a name="id29"></a>
 
 En conclusión, podemos comentar que gracias al paquete yargs podemos acceder y gestionar los parámetros de entrada de una forma muy sencilla, una cosa que es muy importante para poder realizar una aplicación de gran calidad para el usuario.
 
