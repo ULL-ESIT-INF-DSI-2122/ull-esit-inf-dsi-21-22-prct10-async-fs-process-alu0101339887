@@ -113,6 +113,8 @@ if (process.argv.length !== 3) {
 }
 ```
 
+>> El watcher seguirá escuchando el fichero hasta que se cierre el programa.
+
 ## Ejercicio 2<a name="id7"></a>
 
 Para este segundo ejercicio se nos pide implementar un programa que devuelva el número de ocurrencias de una palabra en un fichero de texto. Para ello deberemos hacer uso de la función **spawn** y de los comandos ```grep```, ```cat``` y ```wc```. Además, gracias al uso del paquete **yargs** podremos acceder y gestionar los parámetros introducidos por el usuario desde la línea de comandos.
