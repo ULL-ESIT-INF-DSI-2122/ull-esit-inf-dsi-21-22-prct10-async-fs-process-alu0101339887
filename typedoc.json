@@ -1,9 +1,10 @@
 {
   "entryPoints": [
-    "./src/EjercicioP10/Ejercicio_01.ts",
-    "./src/EjercicioP10/Ejercicio_02.ts",
-    "./src/EjercicioP10/Ejercicio_03.ts",
-    "./src/EjercicioP10/Ejercicio_04.ts"
+    "./src/Ejercicios_P10/Ejercicio_01/Ejercicio_01.ts",
+    "./src/Ejercicios_P10/Ejercicio_02/Ejercicio_02.ts",
+    "./src/Ejercicios_P10/Ejercicio_03/Ejercicio_03.ts",
+    "./src/Ejercicios_P10/Ejercicio_03/Ejercicio_03_fs.ts",
+    "./src/Ejercicios_P10/Ejercicio_04/Ejercicio_04.ts"
   ],
   "out": "./docs"
 }

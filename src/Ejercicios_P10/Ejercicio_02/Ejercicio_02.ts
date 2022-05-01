@@ -2,6 +2,9 @@ import {access} from 'fs';
 import {spawn} from 'child_process';
 import yargs from 'yargs';
 
+/**
+ * Manejo de los argumentos recibidos por la línea de comandos
+ */
 yargs.command({
   command: 'count',
   describe: 'Counts the number of word occurrences in a file',
@@ -16,17 +19,17 @@ yargs.command({
       demandOption: true,
       type: 'string',
     },
-    searchFunction: {
+    pipe: {
       describe: 'Function to use',
       demandOption: true,
       type: 'string',
     },
   },
   handler: (argv) => {
-    const {file, word, searchFunction} = argv;
-    if (searchFunction === 'pipe') {
+    const {file, word, pipe} = argv;
+    if (pipe === 'yes') {
       withPipe(file as string, word as string);
-    } else if (searchFunction === 'no_pipe') {
+    } else if (pipe === 'no') {
       withoutPipe(file as string, word as string);
     } else {
       console.log('Invalid function');
@@ -36,7 +39,13 @@ yargs.command({
 
 yargs.parse();
 
+// ------------------- FUNCIONES -------------------
 
+/**
+ * Método que ejecuta el comando grep con el pipe
+ * @param file Nombre del fichero
+ * @param word Palabra a buscar
+ */
 export function withPipe(file: string, word: string) {
   access(file, (err) => {
     if (err) {
@@ -53,7 +62,11 @@ export function withPipe(file: string, word: string) {
   });
 }
 
-
+/**
+ * Méodo que ejecuta el comando grep sin el pipe
+ * @param file Nombre del fichero
+ * @param word Palabra a buscar
+ */
 export function withoutPipe(file: string, word: string) {
   access(file, (err) => {
     if (err) {

@@ -2,7 +2,11 @@ import {open, mkdirSync, existsSync, rmdirSync} from 'fs';
 import {rename, statSync, access, constants, readdir} from 'fs';
 import yargs from 'yargs';
 
+// --------------- MANEJO DE LOS ARGUMENTOS ----------------- //
 
+/**
+ * Comando para comprobar si se trata de un directorio o un fichero.
+ */
 yargs.command({
   command: 'type',
   describe: 'Mostrar si es un directorio o un fichero',
@@ -22,7 +26,9 @@ yargs.command({
   },
 });
 
-
+/**
+ * Comando para crear un nuevo directorio.
+ */
 yargs.command({
   command: 'add',
   describe: 'Crear un nuevo directorio',
@@ -42,7 +48,9 @@ yargs.command({
   },
 });
 
-
+/**
+ * Comando para listar los ficheros dentro de un directorio.
+ */
 yargs.command({
   command: 'list',
   describe: 'Listar los ficheros dentro de un directorio',
@@ -62,7 +70,9 @@ yargs.command({
   },
 });
 
-
+/**
+ * Comando para mostrar el contenido de un fichero.
+ */
 yargs.command({
   command: 'show',
   describe: 'Mostrar el contenido de un fichero',
@@ -82,7 +92,9 @@ yargs.command({
   },
 });
 
-
+/**
+ * Comando para eliminar un directorio o un fichero.
+ */
 yargs.command({
   command: 'remove',
   describe: 'Borrar ficheros y directorios',
@@ -102,7 +114,9 @@ yargs.command({
   },
 });
 
-
+/**
+ * Comando para mover un directorio o un fichero.
+ */
 yargs.command({
   command: 'move',
   describe: 'Control de cambios sobre un directorio',
@@ -133,6 +147,10 @@ yargs.parse();
 
 // --------------------- FUNCIONES --------------------- //
 
+/**
+ * Función para comprobar si se trata de un directorio o un fichero.
+ * @param path Ruta del directorio a comprobar.
+ */
 export function type_(path: string) {
   if (existsSync(path)) {
     if (isDirectory(path)) {
@@ -145,12 +163,19 @@ export function type_(path: string) {
   }
 }
 
-
+/**
+ * Comprobar si una ruta es un directorio.
+ * @param path Ruta del directorio a crear.
+ * @returns Retorna un booleano indicando si se trata de un directorio o no.
+ */
 export function isDirectory(path: string) {
   return existsSync(path) && statSync(path).isDirectory();
 }
 
-
+/**
+ * Función para crear un nuevo directorio.
+ * @param path Ruta del directorio a crear.
+ */
 export function add(path: string) {
   const dir = path.split('/');
   const dirName = dir[dir.length - 1];
@@ -169,7 +194,10 @@ export function add(path: string) {
   }
 }
 
-
+/**
+ * Función para listar los ficheros dentro de un directorio.
+ * @param path Ruta del directorio a listar.
+ */
 export function list(path: string) {
   const dirExists = existsSync(path);
   if (dirExists) {
@@ -191,7 +219,10 @@ export function list(path: string) {
   }
 }
 
-
+/**
+ * Función para mostrar el contenido de un fichero.
+ * @param path Ruta del fichero a mostrar.
+ */
 export function showFile(path: string) {
   open(path, 'r', (err) => {
     if (err) {
@@ -211,7 +242,10 @@ export function showFile(path: string) {
   });
 }
 
-
+/**
+ * Función para eliminar un directorio o un fichero.
+ * @param path Ruta del directorio a eliminar.
+ */
 export function remove(path: string) {
   const dirExists = existsSync(path);
   if (dirExists) {
@@ -230,7 +264,11 @@ export function remove(path: string) {
   }
 }
 
-
+/**
+ * Función para mover un directorio o un fichero.
+ * @param oPath Ruta del directorio original.
+ * @param dPath Ruta del directorio destino.
+ */
 export function moveDir(oPath: string, dPath: string) {
   access(oPath, constants.F_OK, (err) => {
     if (err?.code === 'ENOENT') {
