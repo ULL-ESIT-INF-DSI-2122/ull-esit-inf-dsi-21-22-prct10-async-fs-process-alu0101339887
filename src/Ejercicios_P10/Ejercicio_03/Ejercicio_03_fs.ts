@@ -61,7 +61,7 @@ yargs.parse();
  * @param user Nombe del usuario
  * @param path Ruta del directorio
  */
-export function watchFile_(user: string, path: string) {
+function watchFile_(user: string, path: string) {
   watch(path, (event: string, filename: string) => {
     const file = `${path}/${filename}`;
     if (event === 'rename') {
@@ -78,7 +78,7 @@ export function watchFile_(user: string, path: string) {
  * Método para controlar los cambios de los direcotorios de todos los usuarios.
  * @param path Ruta del directorio
  */
-export function watchAll(path: string) {
+function watchAll(path: string) {
   const user = getUser(path);
   watch(path, (event: string, filename: string) => {
     if (event === 'rename') {
@@ -104,7 +104,7 @@ export function getUser(path: string) {
  * Método para controlar los cambios de un archivo y mostrar su contenido.
  * @param path Ruta del archivo
  */
-export function readFile_(path: string) {
+function readFile_(path: string) {
   console.log(`Reading file ${path}`);
   open(path, 'r', (err) => {
     if (err) {
