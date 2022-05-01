@@ -58,7 +58,7 @@ Por último, podrá acceder a la página web del informe pulsando sobre este [_e
 
 Para este segundo ejercicio se nos pide implementar un programa que devuelva el número de ocurrencias de una palabra en un fichero de texto. Para ello deberemos hacer uso de la función **spawn** y de los comandos ```grep```, ```cat``` y ```wc```. Además, gracias al uso del paquete **yargs** podremos acceder y gestionar los parámetros introducidos por el usuario desde la línea de comandos.
 
-**[IMAGEN]**
+<img width="765" alt="Captura de pantalla 2022-04-28 a las 20 32 24" src="https://user-images.githubusercontent.com/58183963/166163830-22b8fdca-49b5-4327-a397-78dfb5dc2ef1.png">
 
 ### Manejo de los argumentos<a name="id5"></a>
 
@@ -153,7 +153,7 @@ export function withoutPipe(file: string, word: string) {
 
 >> En caso de que el fichero no exista, se mostrará un mensaje de error, sin embargo, si el fichero existe, se mostrará el número de ocurrencias de la palabra.
 
-**[IMAGEN]**
+<img width="1279" alt="Captura de pantalla 2022-04-28 a las 22 12 30" src="https://user-images.githubusercontent.com/58183963/166163854-58380671-042c-4b23-a842-ba9bfe363095.png">
 
 ### Ejemplos de ejecución<a name="id8"></a>
 
@@ -665,7 +665,7 @@ $ node watch.js remove --path=path
 $ node watch.js move --orig_path=path --dest_path=path
 ```
 
-**[IMAGEN]**
+<img width="1393" alt="Captura de pantalla 2022-05-01 a las 16 09 27" src="https://user-images.githubusercontent.com/58183963/166163871-affe8fb8-5ba8-4faf-8718-7daa8d79e1ac.png">
 
 # CONCLUSIÓN<a name="id26"></a>
 
