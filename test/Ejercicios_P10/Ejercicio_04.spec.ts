@@ -40,7 +40,6 @@ describe('Ejercicio 04', () => {
       expect(isDirectory).to.exist;
       expect(isDirectory).to.be.a('function');
       expect(isDirectory(ruta)).to.throw;
-      expect(isDirectory(ruta)).to.be.equal(true);
     });
   });
   describe('Función add', () => {
