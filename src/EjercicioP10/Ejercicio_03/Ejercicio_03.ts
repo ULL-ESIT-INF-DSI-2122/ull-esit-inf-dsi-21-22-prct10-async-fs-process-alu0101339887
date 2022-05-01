@@ -97,15 +97,15 @@ export function readFile_(path: string) {
     if (err) {
       console.log(`Error opening ${path}`);
     } else {
-      let sum = '';
+      let data = '';
       const lineReader = require('readline').createInterface({
         input: require('fs').createReadStream(path),
       });
       lineReader.on('line', (line: string) => {
-        sum += line;
+        data += line;
       });
       lineReader.on('close', () => {
-        console.log(` --> Content of ${path}: ${sum}`);
+        console.log(` --> Content of ${path}: ${data}`);
       });
     }
   });
