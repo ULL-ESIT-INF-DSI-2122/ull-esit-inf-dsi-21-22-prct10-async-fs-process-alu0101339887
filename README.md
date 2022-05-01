@@ -33,7 +33,7 @@
     - [Ejemplos de ejecución](#id25).
 - [CONCLUSIÓN](#id26).
 
-# INTRODICCIÓN<a name="id1"></a>
+# INTRODUCCIÓN<a name="id1"></a>
 
 En esta práctica resolveremos distintos ejercicios centrándonos, sobretodo, en el uso de **callbacks** y **funciones asíncronas**. Para ello haremos uso de algunas de las funciones proporcionadas por ```fs```, ```spawn``` y ```chokidar``` (se utilizará para comprobar su funcionamiento respecto al de fs). Por otra parte, también tendremos que hacer uso de yargs para poder utilizar la entrada de comandos del usuario por la terminal para poder ejecutar cada uno de los programas. 
 
